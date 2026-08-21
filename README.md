@@ -32,14 +32,29 @@ seul tient le paquet, applique les règles et envoie à chacun sa propre vue —
 personne ne reçoit la main de personne. Les autres navigateurs s'y branchent
 en WebRTC (via [PeerJS](https://peerjs.com)).
 
-Un service public de rendez-vous sert uniquement à mettre deux navigateurs en
-relation ; **aucune carte n'y transite**. Pour utiliser le vôtre :
+Deux services publics interviennent, et il faut savoir ce que chacun voit.
+
+Le **service de rendez-vous** met les deux navigateurs en relation, rien de
+plus : aucune carte n'y transite. Le vôtre se règle ainsi :
 
 ```
 …/exploding-kittens/?relais=mon.serveur.example:9000
 ```
 
-Le réglage est mémorisé et voyage dans le lien d'invitation.
+Le **relais de secours** (TURN) ne sert que lorsqu'aucun chemin direct n'existe
+— NAT symétrique, VPN, pare-feu d'entreprise. Sans lui, ces réseaux-là ne
+peuvent tout simplement pas jouer. Les paquets le traversent alors réellement,
+mais chiffrés de bout en bout par DTLS : le relais transporte sans pouvoir
+lire. Le projet utilise par défaut un relais public gratuit, sans garantie de
+service ; pour le vôtre :
+
+```
+…/exploding-kittens/?turn=turn:mon.serveur:3478|utilisateur|secret
+```
+
+Les deux réglages sont mémorisés, s'affichent à l'accueil avec de quoi les
+retirer, et voyagent dans le lien d'invitation — les deux camps doivent passer
+par les mêmes services pour se trouver.
 
 Conséquences à connaître :
 
@@ -57,9 +72,11 @@ la page les sépare plutôt que de renvoyer un message unique :
 - **la table n'existe plus** — l'hôte a fermé ou rechargé sa page, ou son
   téléphone s'est verrouillé. Le code meurt avec l'onglet, et chaque clic sur
   « Créer une partie » en tire un nouveau ;
-- **la liaison directe est bloquée** — la table est bien trouvée, mais les deux
-  navigateurs n'arrivent pas à se parler : réseau d'entreprise, VPN ou pare-feu
-  qui filtre le WebRTC ;
+- **la liaison est bloquée** — la table est bien trouvée, mais les deux
+  navigateurs n'arrivent pas à se parler. La page relève alors les adresses que
+  votre navigateur a réussi à obtenir : aucune adresse publique et aucune
+  adresse relayée désignent un pare-feu strict, une adresse relayée obtenue de
+  votre côté désigne l'hôte ;
 - **le service de rendez-vous est injoignable** — panne réseau de votre côté.
 
 Un premier « introuvable » ne conclut rien : le registre du service met parfois
