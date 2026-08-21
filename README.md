@@ -49,6 +49,25 @@ Conséquences à connaître :
 - une table qu'un absent bloquerait se débloque toute seule (il pioche à sa
   place, ou son chaton explose).
 
+## Quand ça ne marche pas
+
+« Aucune table n'est ouverte sous ce code » a trois causes bien distinctes, et
+la page les sépare plutôt que de renvoyer un message unique :
+
+- **la table n'existe plus** — l'hôte a fermé ou rechargé sa page, ou son
+  téléphone s'est verrouillé. Le code meurt avec l'onglet, et chaque clic sur
+  « Créer une partie » en tire un nouveau ;
+- **la liaison directe est bloquée** — la table est bien trouvée, mais les deux
+  navigateurs n'arrivent pas à se parler : réseau d'entreprise, VPN ou pare-feu
+  qui filtre le WebRTC ;
+- **le service de rendez-vous est injoignable** — panne réseau de votre côté.
+
+Un premier « introuvable » ne conclut rien : le registre du service met parfois
+une seconde à voir une table qui vient d'ouvrir, donc la page réessaie trois
+fois avant de rendre son verdict, en le disant à l'écran. Le salon affiche par
+ailleurs un témoin : s'il passe à l'orange, la table de l'hôte a décroché du
+service et se rebranche.
+
 ## Les règles couvertes
 
 Le jeu de base complet, à deux à cinq joueurs :
