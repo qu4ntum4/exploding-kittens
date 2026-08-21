@@ -44,13 +44,22 @@ plus : aucune carte n'y transite. Le vôtre se règle ainsi :
 Le **relais de secours** (TURN) ne sert que lorsqu'aucun chemin direct n'existe
 — NAT symétrique, VPN, pare-feu d'entreprise. Sans lui, ces réseaux-là ne
 peuvent tout simplement pas jouer. Les paquets le traversent alors réellement,
-mais chiffrés de bout en bout par DTLS : le relais transporte sans pouvoir
-lire. Le projet utilise par défaut un relais public gratuit, sans garantie de
-service ; pour le vôtre :
+mais chiffrés de bout en bout par DTLS : le relais transporte sans pouvoir lire.
+
+**Aucun relais n'est fourni par défaut**, et c'est un choix subi : il n'existe
+pas de relais public gratuit et anonyme fiable — ceux qui existaient ont fermé
+leur accès libre. Un compte gratuit chez [Metered](https://www.metered.ca/tools/openrelay/)
+ou [Cloudflare](https://developers.cloudflare.com/calls/turn/) prend deux
+minutes. Le réglage se fait dans **Réglages réseau**, sur la page d'accueil, ou
+par l'URL :
 
 ```
 …/exploding-kittens/?turn=turn:mon.serveur:3478|utilisateur|secret
 ```
+
+Le même écran propose un **test de connexion** : il rassemble les adresses que
+votre navigateur obtient et dit si vous pourrez jouer, et depuis où — sans
+avoir à créer de partie.
 
 Les deux réglages sont mémorisés, s'affichent à l'accueil avec de quoi les
 retirer, et voyagent dans le lien d'invitation — les deux camps doivent passer
